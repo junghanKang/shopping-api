@@ -1,0 +1,18 @@
+FROM php:7.4
+
+WORKDIR /app
+
+RUN docker-php-ext-install pdo_mysql
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_HOME=/tmp
+ENV PATH $PATH:/tmp/vendor/bin
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY ./data-host/shopping-api /app
+
+RUN composer install --no-interaction --no-plugins --no-scripts
+
+EXPOSE 8080
+
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]

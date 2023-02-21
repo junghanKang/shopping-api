@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  shopping-api:
+    build: ./php
+    container_name: shopping-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./php/data-host/shopping-api:/app
+
+  mysql-master:
+    image: mysql:8
+    container_name: mysql-master
+    environment:
+      MYSQL_DATABASE: commercedb
+      MYSQL_USER: lumenuser
+      MYSQL_PASSWORD: lumenuser
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysqldata_master:/var/lib/mysql
+      - ./mysql/master/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql-net
+
+  mysql-slave:
+    image: mysql:8
+    container_name: mysql-slave
+    depends_on:
+      - mysql-master
+    user: root
+    # entrypoint: bash /etc/entrypoint.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: commercedb
+      MYSQL_MASTER_HOST: mysql-master
+      MYSQL_MASTER_PASSWORD: root
+      MYSQL_REPLICATION_MODE: slave
+      MYSQL_REPLICATION_USER: replication
+      MYSQL_REPLICATION_PASSWORD: replication
+    volumes:
+      - mysqldata_slave:/var/lib/mysql
+      - ./mysql/slave/my.cnf:/etc/mysql/my.cnf
+      # - ./mysql/slave/entrypoint.sh:/etc/entrypoint.sh
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql-net
+
+networks:
+  mysql-net:
+
+volumes:
+  mysqldata_master:
+  mysqldata_slave:
