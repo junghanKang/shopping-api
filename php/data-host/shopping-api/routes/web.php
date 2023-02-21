@@ -12,12 +12,13 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // return $router->app->version();
+    dd(DB::getPdo());
 });
 
-$router->get('/member/register', function () use ($router) {
-
-});
+$router->post('/member/register', [
+    'as' => 'register', 'uses' => 'RegisterController@registerUser'
+]);
 
 $router->get('/member/login', function () use ($router) {
 

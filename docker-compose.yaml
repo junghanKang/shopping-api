@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     volumes:
       - ./php/data-host/shopping-api:/app
+    networks:
+      - mysql-net
 
   mysql-master:
     image: mysql:8
