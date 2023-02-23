@@ -12,23 +12,22 @@
 */
 
 $router->get('/', function () use ($router) {
-    // return $router->app->version();
-    dd(DB::getPdo());
+    return $router->app->version();
 });
 
 $router->post('/member/register', [
     'as' => 'register', 'uses' => 'AuthController@registerUser'
 ]);
 
-$router->get('/users/inquiry', [
+$router->get('/user/inquiry', [
     'as' => 'user', 'uses' => 'inquiryController@getUser'
 ]);
 
-$router->get('/users/orders/inquiry/{userId}', [
+$router->get('/user/orders/{userId}', [
     'as' => 'user', 'uses' => 'inquiryController@getOrder'
 ]);
 
-$router->get('/users/orders/search', [
+$router->get('/users/search', [
     'as' => 'user', 'uses' => 'inquiryController@getUsersWithConditions'
 ]);
 
