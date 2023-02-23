@@ -26,14 +26,19 @@ cd shopping-api
 docker compose up --build -d
 ```
 
-4. 브라우저에서 http://localhost:8080를 입력하여 Lumen API에 접근할 수 있는지 확인
+4. composer install
+```
+docker compose exec shopping-api composer install
+```
 
-5. MySQL 리플리케이션을 위해 쉘 스트립트 실행 (TODO: 자동화 필요)
+5. 브라우저에서 http://localhost:8080 를 입력하여 Lumen API에 접근할 수 있는지 확인
+
+6. MySQL 리플리케이션을 위해 쉘 스트립트 실행 (TODO: 자동화 필요)
 ```
 bash mysql/slave/entrypoint.sh
 ```
 
-6. MySQL 테이블 생성 (TODO: 마이그레이션 세팅 필요)
+7. MySQL 테이블 생성 (TODO: 마이그레이션 세팅 필요)
 ```
 docker compose exec mysql-master bash
 mysql -ulumenuser -plumenuser commercedb
@@ -68,6 +73,11 @@ INSERT INTO orders (order_number, product_name, purchase_datetime, user_id, crea
 VALUES
   ('ORD001', 'Product A', '2023-01-01 12:00:00', 1, NOW(), NOW()),
   ('ORD002', 'Product B', '2023-01-02 14:30:00', 1, NOW(), NOW());
+```
+
+8. symlink .env file
+```
+ln -snf .env.local .env
 ```
 
 ## 사용방법
