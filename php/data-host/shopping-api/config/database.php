@@ -1,6 +1,19 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | PDO Fetch Style
+    |--------------------------------------------------------------------------
+    |
+    | By default, database results will be returned as instances of the PHP
+    | stdClass object; however, you may desire to retrieve records in an
+    | array format for simplicity. Here you can tweak the fetch style.
+    |
+    */
+
+    // 'fetch' => PDO::FETCH_CLASS,
+
     'default' => env('DB_CONNECTION', 'mysql'),
 
     'connections' => [
@@ -17,41 +30,27 @@ return [
             'database' => env('DB_DATABASE'),
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
-            'prefix' => '',
-            'strict' => true,
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => env('DB_PREFIX', ''),
+            'strict' => env('DB_STRICT_MODE', true),
+            'engine' => env('DB_ENGINE', null),
+            'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
-        // 'mysql_readonly' => [
-        //     'read' => [
-        //         'host' => env('SLAVE_DB_HOST'),
-        //         'port' => env('SLAVE_DB_PORT'),
-        //     ],
-        //     'write' => [
-        //         'host' => env('MASTER_DB_HOST'),
-        //         'port' => env('MASTER_DB_PORT'),
-        //     ],
-        //     'driver' => 'mysql',
-        //     // 'port' => env('SLAVE_DB_PORT'),
-        //     'database' => env('DB_DATABASE'),
-        //     'username' => env('DB_USERNAME'),
-        //     'password' => env('DB_PASSWORD'),
-        //     'prefix' => '',
-        //     'strict' => true,
-        // ],
-
-        // 'mysql' => [
-        //     'driver' => 'mysql',
-        //     'host' => env('MASTER_DB_HOST', '127.0.0.1'),
-        //     'port' => env('DB_PORT', '3306'),
-        //     'database' => env('DB_DATABASE', 'forge'),
-        //     'username' => env('DB_USERNAME', 'forge'),
-        //     'password' => env('DB_PASSWORD', ''),
-        //     'unix_socket' => env('DB_SOCKET', ''),
-        //     'charset' => 'utf8mb4',
-        //     'collation' => 'utf8mb4_unicode_ci',
-        //     'prefix' => '',
-        //     'prefix_indexes' => true,
-        //     'strict' => true,
-        // ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Migration Repository Table
+    |--------------------------------------------------------------------------
+    |
+    | This table keeps track of all the migrations that have already run for
+    | your application. Using this information, we can determine which of
+    | the migrations on disk haven't actually been run in the database.
+    |
+    */
+
+    'migrations' => 'migrations',
 
 ];

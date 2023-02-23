@@ -40,6 +40,8 @@ services:
       MYSQL_MASTER_HOST: mysql-master
       MYSQL_MASTER_PASSWORD: root
       MYSQL_REPLICATION_MODE: slave
+      # MYSQL_USER: lumenuser
+      # MYSQL_PASSWORD: lumenuser
       MYSQL_REPLICATION_USER: replication
       MYSQL_REPLICATION_PASSWORD: replication
     volumes:

@@ -9,18 +9,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     //
-    // }
-
     /**
      * Register a new user.
      *
@@ -63,5 +53,13 @@ class RegisterController extends Controller
         }
 
         return response()->json(['message' => 'Failed to register user'], 500);
+    }
+
+    public function login(Request $request)
+    {
+    }
+
+    public function logout(Request $request)
+    {
     }
 }

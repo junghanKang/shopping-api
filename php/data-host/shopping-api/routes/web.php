@@ -17,14 +17,27 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/member/register', [
-    'as' => 'register', 'uses' => 'RegisterController@registerUser'
+    'as' => 'register', 'uses' => 'AuthController@registerUser'
 ]);
 
-$router->get('/member/login', function () use ($router) {
+$router->get('/users/inquiry', [
+    'as' => 'user', 'uses' => 'inquiryController@getUser'
+]);
 
-});
+$router->get('/users/orders/inquiry/{userId}', [
+    'as' => 'user', 'uses' => 'inquiryController@getOrder'
+]);
 
-$router->get('/member/logout', function () use ($router) {
+$router->get('/users/orders/search', [
+    'as' => 'user', 'uses' => 'inquiryController@getUsersWithConditions'
+]);
 
-});
+// $router->post('/member/login', [
+//     'as' => 'register', 'uses' => 'AuthController@login'
+// ]);
+
+// $router->post('/member/logout', [
+//     'as' => 'register', 'uses' => 'AuthController@logout'
+// ]);
+
 
