@@ -58,6 +58,10 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('jwt');
+// $app->configure('auth');
+// $app->alias('auth', Illuminate\Auth\AuthManager::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +80,7 @@ $app->configure('app');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    // 'jwt.auth' => App\Http\Middleware\JwtMiddleware::class,
 ]);
 
 /*
@@ -91,6 +96,7 @@ $app->routeMiddleware([
 
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 // $app->register(Laravel\Passport\PassportServiceProvider::class);
 // $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);

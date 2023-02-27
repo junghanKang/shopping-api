@@ -19,24 +19,26 @@ $router->post('/member/register', [
     'as' => 'register', 'uses' => 'AuthController@registerUser'
 ]);
 
-$router->get('/user/inquiry', [
-    'as' => 'user', 'uses' => 'inquiryController@getUser'
+$router->post('/member/login', [
+    'as' => 'login', 'uses' => 'AuthController@login'
 ]);
 
-$router->get('/user/orders/{userId}', [
-    'as' => 'user', 'uses' => 'inquiryController@getOrder'
-]);
+$router->group(['middleware' => 'jwt.auth'],
+    function() use ($router) {
+        $router->get('/user/inquiry', [
+            'as' => 'user', 'uses' => 'inquiryController@getUser'
+        ]);
 
-$router->get('/users/search', [
-    'as' => 'user', 'uses' => 'inquiryController@getUsersWithConditions'
-]);
+        $router->get('/user/orders/{userId}', [
+            'as' => 'user', 'uses' => 'inquiryController@getOrder'
+        ]);
 
-// $router->post('/member/login', [
-//     'as' => 'register', 'uses' => 'AuthController@login'
-// ]);
+        $router->get('/users/search', [
+            'as' => 'user', 'uses' => 'inquiryController@getUsersWithConditions'
+        ]);
 
-// $router->post('/member/logout', [
-//     'as' => 'register', 'uses' => 'AuthController@logout'
-// ]);
-
-
+        $router->post('/member/logout', [
+            'as' => 'logout', 'uses' => 'AuthController@logout'
+        ]);
+    }
+);
