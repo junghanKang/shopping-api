@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
-
 
 class AuthController extends Controller
 {
@@ -57,9 +57,42 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $credentials = $request->only('email', 'password');
+
+        $user = DB::table('users')->where('email', $email)->first();
+
+        if ($user && Hash::check($password, $user->password)) {
+            if ($token = Auth::attempt($credentials)) {
+                return $this->respondWithToken($token);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
+        Auth::logout();
+        return response()->json(['message' => 'Successfully logged out']);
     }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60
+        ]);
+    }
+
 }

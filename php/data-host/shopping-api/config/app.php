@@ -108,4 +108,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'providers' => [
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    ],
 ];
