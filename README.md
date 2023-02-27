@@ -13,7 +13,6 @@ Docker Desktop 4.16.2 (Mac M1)
 1. 레포지토리 클론
 ```
 git clone https://github.com/junghanKang/shopping-api.git
-
 ```
 
 2. 프로젝트 디렉토리로 이동
@@ -96,14 +95,48 @@ http://localhost:8080/member/register
 | password   | 123@aaaaaaA    |
 | phone   | 112    |
 | gender   | male    |
+
 **response**
 ```json
 {
     "message": "User registered successfully"
 }
 ```
-### (미구현) `POST /member/login`: 회원 로그인(인증)
-### (미구현) `POST /member/logout`: 회원 로그아웃
+### `POST /member/login`: 회원 로그인(인증)
+```
+http://localhost:8080/member/login
+```
+**params**
+| Key      | Value |
+| :--- | ---: |
+| email      | test@test.com  |
+| password      | yourpassword  |
+
+**response**
+```json
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJI....",
+    "token_type": "bearer",
+    "expires_in": 3600
+}
+```
+
+### `POST /member/logout`: 회원 로그아웃
+```
+http://localhost:8080/member/logout
+```
+**params**
+| Key      | Value |
+| :--- | ---: |
+| token      | yourtoken |
+
+**response**
+```json
+{
+    "message": "Successfully logged out"
+}
+```
+
 ### `GET /user/inquiry`: 단일 회원 상세 정보 조회
 ```
 http://localhost:8080/user/inquiry
@@ -112,6 +145,7 @@ http://localhost:8080/user/inquiry
 | Key      | Value |
 | :--- | ---: |
 | email      | test@test.com  |
+| token      | yourtoken |
 
 **response**
 ```json
@@ -131,6 +165,11 @@ http://localhost:8080/user/inquiry
 http://localhost:8080/user/orders/1
 (1 - 회원 아이디)
 ```
+**params**
+| Key      | Value |
+| :--- | ---: |
+| token      | yourtoken |
+
 **response**
 ```json
 [
@@ -161,6 +200,7 @@ http://localhost:8080/users/search
 | search      | test@test.com  |
 | perPage    | 10  |
 | page    | 1  |
+| token      | yourtoken |
 
 **response**
 ```json

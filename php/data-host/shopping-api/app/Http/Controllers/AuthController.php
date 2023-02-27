@@ -63,15 +63,14 @@ class AuthController extends Controller
 
         $user = DB::table('users')->where('email', $email)->first();
 
-        if ($user && Hash::check($password, $user->password)) {
-            if ($token = Auth::attempt($credentials)) {
-                return $this->respondWithToken($token);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
-        } else {
+        if (!$user || !Hash::check($password, $user->password)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        if (! $token = Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 
     public function logout()
